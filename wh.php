@@ -9,11 +9,6 @@ $page_title	= "Warehouse";
 $page_id 	= "4";
 chkSecurity($page_id);
 
-$level_list_q 	= "SELECT ul.id, ul.name 
-		           FROM user_level ul 
-		           WHERE ul.id > '".$_SESSION['level']."' AND ul.del = 0 AND ul.hidden = 0;";
-$level_list_SQL	= @mysql_query($level_list_q) or die(mysql_error());
-
 $members_list_q = "SELECT u.id, 
 		                  CONCAT(u.fname,' ',u.lname) AS fullname, 
 		                  u.email, 
@@ -98,53 +93,43 @@ include THEME_DEFAULT.'header.php'; ?>
 <div class="sub-header">
 	<a href="#" data-toggle="collapse" data-target="#form-member">
 		<div>
-			<span>Add New User</span>
+			<span>Add New Warehouse</span>
 		</div>
 	</a><br>
 	<div id="form-member" class="collapse">
 	<form class="well form" role="form" action="" method="POST">
 		<div class="form-group">
-			<label>Salutation</label>
-			<select class="form-control" name="salut">
-				<option>---------------------</option>
-   				<option value="mr.">Mr.</option>
-				<option value="mrs.">Mrs.</option>
-				<option value="ms.">Ms.</option>
- 			</select>
+			<label>Name</label>
+			<input name="name" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>First Name</label>
-			<input name="fname" type="text" class="form-control">
+			<label>Address</label>
+			<input name="address" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>Last Name</label>
-			<input name="lname" type="text" class="form-control">
+			<label>PIC</label>
+			<input name="pic" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>Email</label>
-			<input name="email" type="text" class="form-control">
+			<label>PIC Email</label>
+			<input name="pemail" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>Password</label>
-			<br>Default password : <b>'<?=DEFAULT_PASS?>'</b>
+			<label>PIC Phone</label>
+			<input name="pphone" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>Level</label>
-			<select class="form-control" name="level">
-    			<option SELECTED>---------------------</option>
-<?php 
-  	while($level_list_array = mysql_fetch_array($level_list_SQL,MYSQL_ASSOC)){?>
-    <option value="<?=$level_list_array["id"]?>"><?=ucwords($level_list_array["name"])?></option>
-<? } ?></select>
+			<label>Location</label>
+			<input name="location" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary" name="add_user">Create New User</button>
+			<button type="submit" class="btn btn-primary" name="add_wh">Create New Warehouse</button>
 		</div>
 	</form> 
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			Registered Users On The System
+			Registered Warehouse On The System
 		</div>
 		<div class="panel-body">
         	<?=$pagingResult->pagingMenu();?>
@@ -154,9 +139,10 @@ include THEME_DEFAULT.'header.php'; ?>
             	<tr valign="middle"> 
                  	<th width="25">&nbsp;<b>NO.</b></td>
 					<th width="*" align="left">&nbsp;<b>NAME</b></td>
-                 	<th width="*" align="left">&nbsp;<b>EMAIL</b>&nbsp;</td>
-            		<th width="*" align="left">&nbsp;<b>LEVEL</b>&nbsp;</td>
-                 	<th width="*" align="left">&nbsp;<b>REG. DATE</b>&nbsp;</td>
+					<th width="*" align="left">&nbsp;<b>ADDRESS</b>&nbsp;</td>
+                 	<th width="*" align="left">&nbsp;<b>PIC</b>&nbsp;</td>
+            		<th width="*" align="left">&nbsp;<b>PIC EMAIL</b>&nbsp;</td>
+                 	<th width="*" align="left">&nbsp;<b>PIC PHONE</b>&nbsp;</td>
                  	<th width="*" align="center" colspan="2">&nbsp;<b>CMD</b></td>
 				</tr>
 				</thead>

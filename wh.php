@@ -37,6 +37,8 @@ if(isset($_POST['add_wh'])){
 	$city 	= strtolower(trim($_POST['city']));
 	$zip	= trim($_POST['zip']);
 	$country = strtolower(trim($_POST['country']));
+	$latitude = trim($_POST['latitude']);
+	$longitude = trim($_POST['longitude']);
 	$pic 	= strtolower(trim($_POST['pic']));
 	$pemail = strtolower(trim($_POST['pemail']));
 	$pphone = strtolower(trim($_POST['pphone']));
@@ -44,8 +46,8 @@ if(isset($_POST['add_wh'])){
 	$date	= date('Y-m-d H:i:s');
 	
    	if(!empty($name) AND !empty($aisle) AND !empty($address) AND !empty($city) AND !empty($pic) AND !empty($pemail) AND !empty($pphone)){
-		$add_q  = "INSERT INTO warehouse (name,aisle,address,city,zip,country,pic,pemail,pphone,createID,createDate,updID,updDate)
-				   VALUES ('$name','$aisle','$address','$city','$zip','$country','$pic','$pemail','$pphone','$uid','$date','$uid','$date');";
+		$add_q  = "INSERT INTO warehouse (name,aisle,address,city,zip,country,latitude,longitude,pic,pemail,pphone,createID,createDate,updID,updDate)
+				   VALUES ('$name','$aisle','$address','$city','$zip','$country','$latitude','$longitude','$pic','$pemail','$pphone','$uid','$date','$uid','$date');";
 				if(mysql_query($add_q) or die(mysql_error())) {	
 					$status .= "<div class=\"alert alert-success alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
 						    		Warehouse <b>".ucwords($name)."</b> has been succesfully created.
@@ -133,8 +135,12 @@ include THEME_DEFAULT.'header.php'; ?>
 			<input name="pphone" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>Location</label>
-			<input name="location" type="text" class="form-control">
+			<label>Latitude</label>
+			<input name="latitude" type="text" class="form-control">
+		</div>
+		<div class="form-group">
+			<label>Longitude</label>
+			<input name="longitude" type="text" class="form-control">
 		</div>
 		<div class="form-group">
 			<button type="submit" class="btn btn-primary" name="add_wh">Create New Warehouse</button>

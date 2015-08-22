@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 							<a href="./index.php">
 								<div>
 									<span class="glyphicon glyphicon-circle-arrow-left"></span>
-									<span>Main Panel</span>
+									<span>Panel Utama</span>
 								</div>
 							</a>
 						</div>
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
 							<label name="password">Password</label>
 							<input name="password" type="password" size="40" class="form-control">
 						</div>
-						<a href="./rst_pass.php">Forgot/Reset Password</a><br/><br/>
+						<a href="./rst_pass.php">Lupa/Reset Password</a><br/><br/>
 						<div class="form-group">
 							<button type="submit" name="submit" class="btn btn-primary btn-block">
 								<span class="glyphicon glyphicon-log-in"></span>&nbsp;

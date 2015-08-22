@@ -4,7 +4,7 @@ require_once LIB_PATH.'functions.lib.php';
 chkLicense();
 chkSession();
 
-$page_title 	= "Member Details";
+$page_title 	= "Warehouse Details";
 $page_id	 	= "4";
 chkSecurity($page_id);
 

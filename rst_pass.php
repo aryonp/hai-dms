@@ -57,18 +57,18 @@ if (isset($_POST['rst-button']) && isset($_POST['email'])) {
 									<a href="./login.php">
 										<div>
 											<span class="glyphicon glyphicon-circle-arrow-left"></span>
-											<span>Login Page</span>
+											<span>Halaman Login</span>
 										</div>
 									</a>
 								</div>
 								<div class="form-group">
-									<label>Provide Your Email Below</label>
+									<label>Mohon Sediakan Email Anda</label>
 									<input type="text" name="email" class="form-control">
 								</div>
 								<div class="form-group">
 						  			<button type="submit" name="rst-button" class="btn btn-primary btn-block">
 						  				<span class="glyphicon glyphicon-repeat"></span>&nbsp;
-						  				Reset My Password
+						  				Reset Password Saya
 						  			</button>
 						 		</div>
 							</form>

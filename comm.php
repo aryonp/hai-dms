@@ -72,6 +72,10 @@ if (isset($_GET['did'])){
 	}
 }
 
+if(isset($_POST['cancel'])){
+	header("location:$this_page");
+}
+
 include THEME_DEFAULT.'header.php'; ?>             			
 <//-----------------CONTENT-START-------------------------------------------------//>
 <h1 class="page-header"><?=$page_title?> Page</h1>
@@ -89,11 +93,11 @@ include THEME_DEFAULT.'header.php'; ?>
 			<input name="name" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>Satuan</label>
+			<label>Unit</label>
 			<input name="satuan" type="text" class="form-control" placeholder="Kg/Litre/Piece/etc">
 		</div>
 		<div class="form-group">
-			<label>Kadaluarsa</label>
+			<label>Expiry Time</label>
 			<input name="kadaluarsa" type="text" class="form-control" placeholder="Please input in days">
 		</div>
 		<div class="form-group">
@@ -119,33 +123,54 @@ include THEME_DEFAULT.'header.php'; ?>
 				</tr>
 				</thead>
 				<tbody>
-<?php 
-   if ($pagingResult->getPageRows()>= 1) {	
+<?php 	if($pagingResult->getPageRows()>= 1) {	
 			$count = $pagingResult->getPageOffset() + 1;
 			$result = $pagingResult->getPageArray();
-			while ($array = mysql_fetch_array($result, MYSQL_ASSOC)) { ?>
-		<tr valign="top">
-			<td align="left">&nbsp;<?=$count?>.&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["name"])?ucwords($array["name"]):"-";?>&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["satuan"])?$array["satuan"]:"-";?>&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["expiry"])?$array["expiry"]:"-";?>&nbsp;hari&nbsp;</td>
-			<td width="60" align="center" valign="middle">
-				<a title="View Details" class="btn btn-default" href="./wh_det.php?id=<?=$array["id"]?>">
-					<span class="glyphicon glyphicon-pencil"></span>
-				</a>
-			</td>
-			<td width="60" align="center" valign="middle">
-				<a title="Delete" class="btn btn-default" href="<?=$this_page?>&did=<?=$array["id"]?>">
-					<span class="glyphicon glyphicon-trash"></span>
-				</a>
-			</td>
-		</tr>
-
-<?php	$count++;  
-		}
-	} else {?>
-		<tr><td colspan="6" align="center" bgcolor="#e5e5e5"><br />No Data Entries<br /><br /></td></tr>
-				<?php } ?></tbody>
+			while ($array = mysql_fetch_array($result, MYSQL_ASSOC)) {
+				if (isset($_GET['nid']) && $_GET['nid'] == $array["id"]) {?>
+				<form method="POST" action="">
+				<input type="hidden" name="nid" value="<?=$array["id"]?>">
+				<tr bgcolor="#ffcc99" align="left" valign="top">
+					<td width="25">&nbsp;<?=$count?>.</td>
+					<td><input type="text" class="form-control" name="name" size="30" value="<?=($array["name"])?ucwords($array["name"]):"-";?>"></td>
+					<td><input type="text" class="form-control" name="satuan" size="30" value="<?=($array["satuan"])?$array["satuan"]:"-";?>"></td>
+					<td><input type="text" class="form-control" name="expiry" size="30" value="<?=($array["expiry"])?$array["expiry"]:"-";?>"></td>
+					<td align="center">
+						<button type="submit" class="btn btn-default" name="upd_level">
+							<span class="glyphicon glyphicon-floppy-saved"></span>
+						</button>
+					</td>
+					<td align="center">
+						<button type="submit" class="btn btn-default" name="cancel">
+							<span class="glyphicon glyphicon-floppy-remove"></span>
+						</button>
+					</td>
+				</tr>
+				</form>
+<?php 		} else { ?>
+				<tr align="left" valign="top">
+					<td>&nbsp;<?=$count?>.</td>
+					<td>&nbsp;<?=($array["name"])?ucwords($array["name"]):"-";?></td>
+					<td>&nbsp;<?=($array["name"])?$array["satuan"]:"-";?></td>
+					<td>&nbsp;<?=($array["name"])?$array["expiry"]:"-";?></td>
+					<td width="60" align="center">
+						<a title="Edit Level" class="btn btn-default" href="<?=$this_page?>&nid=<?=$array["id"]?>">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</a>
+					</td>
+					<td width="60" align="center">
+						<a title="Delete Level" class="btn btn-default" href="<?=$this_page?>&did=<?=$array["id"]?>">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</td>
+				</tr>
+<?php	 		} $count++; 
+			}
+		} else {?>
+				<tr><td colspan="5" align="center" bgcolor="#e5e5e5"><br />No Data Entries<br /><br /></td></tr>
+				<?php } ?>
+				
+				</tbody>
 			</table>
 				<?=$pagingResult->pagingMenu();?>
 				<br>

@@ -26,15 +26,15 @@
 
   				<ul class="dropdown-menu" role="menu">
             		<li>
-            			<a href="./sc.php" >
-            			<span class="glyphicon glyphicon-calendar"></span>
-            				Dashboard
+            			<a href="./sa.php" >
+            			<span class="glyphicon glyphicon-globe"></span>
+            				Stock Availability
             			</a>
             		</li>
             		<li>
-            			<a href="./tc.php" >
-            			<span class="glyphicon glyphicon-list-alt"></span>
-            				Collaboration
+            			<a href="./tm.php" >
+            			<span class="glyphicon glyphicon-road"></span>
+            				Transport Movement
             			</a>
             		</li>
   				</ul>

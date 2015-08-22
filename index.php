@@ -22,7 +22,7 @@ require_once 'init.php';
                             </div>
                         </div>
                         <div class="panel-footer">
-                          	<span class="pull-left">Control Centre</span>
+                          	<span class="pull-left">Pusat Kendali</span>
                           	<span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
                             <div class="clearfix"></div>
                         </div> 
@@ -30,7 +30,7 @@ require_once 'init.php';
                    </a>
               </div>
               <div class="col-md-6">
-              	<a href="./sc.php">
+              	<a href="./sa.php">
               		<div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="row">
@@ -41,7 +41,7 @@ require_once 'init.php';
                             </div>
                         </div>
                             <div class="panel-footer">
-                               	<span class="pull-left">Dashboard</span>
+                               	<span class="pull-left">Ketersediaan Pangan</span>
                                	<span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -49,7 +49,7 @@ require_once 'init.php';
                     </a>
                 </div>
                 <div class="col-md-6">
-                	<a href="./tc.php">
+                	<a href="./tm.php">
                     <div class="panel panel-warning">
                         <div class="panel-heading">
                             <div class="row">
@@ -59,7 +59,7 @@ require_once 'init.php';
                             </div>
                         </div>
                             <div class="panel-footer">
-                                <span class="pull-left">Movement</span>
+                                <span class="pull-left">Pergerakan Kendaraan</span>
                                	<span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
 								<div class="clearfix"></div>    
                             </div>
@@ -67,7 +67,7 @@ require_once 'init.php';
                     </a>
                 </div>
                 <div class="col-md-6">
-                	<a href="./tc.php">
+                	<a href="./coll.php">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -77,7 +77,7 @@ require_once 'init.php';
                             </div>
                         </div>
                             <div class="panel-footer">
-                                <span class="pull-left">Collaboration</span>
+                                <span class="pull-left">Kolaborasi</span>
                                	<span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
 								<div class="clearfix"></div>    
                             </div>

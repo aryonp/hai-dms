@@ -28,13 +28,13 @@
             		<li>
             			<a href="./sc.php" >
             			<span class="glyphicon glyphicon-calendar"></span>
-            				Schedule Centre
+            				Dashboard
             			</a>
             		</li>
             		<li>
             			<a href="./tc.php" >
             			<span class="glyphicon glyphicon-list-alt"></span>
-            				Ticket Centre
+            				Collaboration
             			</a>
             		</li>
   				</ul>

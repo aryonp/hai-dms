@@ -12,7 +12,7 @@
 
 define("COMP_NAME", "Satoeboemi");
 define("ADMIN", "support@satoeboemi");
-define("PRODUCT", "eMangan");
+define("PRODUCT", "eSCM");
 define("VERSION", "1.0");
 define("PRODUCT_SN", "TRQ001");
 

@@ -12,6 +12,7 @@
       }
       #map {
         height: 100%;
+        width:100%;
       }
     </style>
   </head>
@@ -30,5 +31,7 @@ function initMap() {
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
         async defer></script>
+        
   </body>
 </html>
+

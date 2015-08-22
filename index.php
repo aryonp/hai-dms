@@ -1,7 +1,6 @@
 <?php 
 require_once 'init.php';
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,11 +50,29 @@ require_once 'init.php';
                 </div>
                 <div class="col-md-6">
                 	<a href="./tc.php">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <span class="glyphicon glyphicon-road" style="font-size:48px;"></span>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="panel-footer">
+                                <span class="pull-left">Movement</span>
+                               	<span class="pull-right"><i class="glyphicon glyphicon-circle-arrow-right"></i></span>
+								<div class="clearfix"></div>    
+                            </div>
+                    </div>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                	<a href="./tc.php">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <span class="glyphicon glyphicon-list-transfer" style="font-size:48px;"></span>
+                                    <span class="glyphicon glyphicon-download-alt" style="font-size:48px;"></span>
                                 </div>
                             </div>
                         </div>

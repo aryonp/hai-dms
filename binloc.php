@@ -3,186 +3,170 @@ require_once 'init.php';
 require_once LIB_PATH.'functions.lib.php';
 require_once LIB_PATH.'paging.lib.php';
 chkLicense();
-chkSession();
+chkSession();	
 
-$page_title		= "Bin location";
-$page_id		= "5";
+$page_title	= "Bin Location";
+$page_id 	= "4";
 chkSecurity($page_id);
 
-$query ="SELECT id, name, hidden FROM user_level WHERE del = '0' ORDER BY id ASC ";
+$wh_list_q 	= "SELECT w.id, w.name, w.city
+		       FROM warehouse w
+		       WHERE w.del = 0;";
+$wh_list_SQL = @mysql_query($wh_list_q) or die(mysql_error());
+
+$list_q = "SELECT b.id, 
+		          b.name AS bname,
+				  w.name AS wname,
+				  w.address,
+				  w.city,
+				  w.zip,
+				  w.country,
+			 	  w.pic,
+				  w.pemail,
+				  w.pphone
+			FROM binloc b LEFT JOIN warehouse w ON (w.id = b.wid)
+			WHERE b.del = '0'
+			ORDER BY w.name ASC, b.name ASC ";
 $pagingResult = new Pagination();
-$pagingResult->setPageQuery($query);
+$pagingResult->setPageQuery($list_q);
 $pagingResult->paginate();
 
-$this_page = $_SERVER['PHP_SELF']."?".$pagingResult->getPageQString();
+$this_page 	= $_SERVER['PHP_SELF']."?".$pagingResult->getPageQString();
+$status 	= "";
+$lastupd 	= date('Y-m-d H:i:s');
 
-$status = "&nbsp;";
-
-if (isset($_POST['add_level'])){
-	$level  = strip_tags(trim($_POST['level_msg']));
+if(isset($_POST['add_binloc'])){
+	$name 	= strtolower(trim($_POST['name']));
+	$wid 	= trim($_POST['whid']);
 	$uid	= $_SESSION['uid'];
 	$date	= date('Y-m-d H:i:s');
-	$hidden = (is_numeric($_POST['level_hide']) OR !empty($_POST['level_hide']))?$_POST['level_hide']:0;
-	$add_level_q  ="INSERT INTO user_level (name,createBy,createDate,updBy,updDate,hidden) VALUES ('$level','$uid','$date','$uid','$date','$hidden');"; 
-	if (!empty($level)){
-		mysql_query($add_level_q) or die(mysql_error());
-		log_hist(13,$level);
-		header("location:$this_page");
-		exit();
-	}
-	else {
-		$status .= "<div class=\"alert alert-danger alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
-						Failed to create new user level. Please check all available parameters.
+	
+   	if(!empty($name) AND !empty($aisle) AND !empty($address) AND !empty($city) AND !empty($pic) AND !empty($pemail) AND !empty($pphone)){
+		$add_q  = "INSERT INTO warehouse (name,aisle,address,city,zip,country,pic,pemail,pphone,createID,createDate,updID,updDate)
+				   VALUES ('$name','$aisle','$address','$city','$zip','$country','$pic','$pemail','$pphone','$uid','$date','$uid','$date');";
+				if(mysql_query($add_q) or die(mysql_error())) {	
+					$status .= "<div class=\"alert alert-success alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
+						    		Bin Location <b>".$name."</b> has been succesfully created.
+							    </div>";
+					log_hist(6,$name);
+				}
+				/* else {
+					$status .= "<div class=\"alert alert-warning alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
+						    	 Cannot create warehouse <b>".$name."</b>. Please check all available parameters.
+							    </div>";
+					log_hist(7,$name);
+				} */
+	}	
+	else {	
+		$status .= "<div class=\"alert alert-warning alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
+					Cannot create an empty bin location. Please check all available parameters.
 				    </div>";
-		log_hist(14,$level);
+		log_hist(7,$name);
 	}
 }
-if (isset($_POST['upd_level'])){
-	$nid 	 = trim($_POST['nid']);
-	$level 	 = strip_tags(trim($_POST['level']));
-	$hidden  = (is_numeric($_POST['hidden']) OR !empty($_POST['hidden']))?$_POST['hidden']:0;
-	$uid	 = $_SESSION['uid'];
-	$date	 = date('Y-m-d H:i:s');
-	$upd_level_q = "UPDATE user_level SET name = '$level', hidden = '$hidden', updBy = '$uid', updDate ='$date' WHERE id ='$nid';";
-	if(@mysql_query($upd_level_q)){
-		log_hist(15,$level);
-		header("location:$this_page");
-		exit();
-	} else {
-		$status .= "<div class=\"alert alert-danger alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
-						Failed to update the user level. Please check all available parameters.
-				    </div>";
-		log_hist(16,$level);
-	}
-}
+	
 if (isset($_GET['did'])){
-	$did  = trim($_GET['did']);
-	$uid  = $_SESSION['uid'];
+	$did = trim($_GET['did']);
+	$uid = $_SESSION['uid'];
 	$date = date('Y-m-d H:i:s');
-	$del_level_q  ="UPDATE user_level SET updBy = '$uid', updDate ='$date', del = '1' WHERE id ='$did';";
-	if(@mysql_query($del_level_q)){
-		log_hist(17,$did);
+	$del_q  = "UPDATE binloc SET updID = '$uid', updDate = '$date', del = '1' WHERE id ='$did';";
+	if(@mysql_query($del_q)) {
+		log_hist(10,$did);
 		header("location:$this_page");
 		exit();
 	} else {
-		$status .= "<div class=\"alert alert-danger alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
-						Failed to delete user level. Please check all available parameters.
+		$status .= "<div class=\"alert alert-warning alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
+					Cannot delete bin location. Please check all available parameters.
 				    </div>";
-		log_hist(18,$did);
+		log_hist(11,$did);
 	}
 }
 
-if(isset($_POST['cancel'])){
-	header("location:$this_page"); 	
-}
-
-include THEME_DEFAULT.'header.php'; ?>
+include THEME_DEFAULT.'header.php'; ?>             			
 <//-----------------CONTENT-START-------------------------------------------------//>
 <h1 class="page-header"><?=$page_title?> Page</h1>
 <?=$status?>
 <div class="sub-header">
-	<a href="#" data-toggle="collapse" data-target="#form-ulevel">
+	<a href="#" data-toggle="collapse" data-target="#form-member">
 		<div>
 			<span>Add New Bin Location</span>
 		</div>
 	</a><br>
-		<div id="form-ulevel" class="collapse">
-			<form class="well form-inline" role="form" method="post">
-  				<div class="form-group">
-      				<input type="text" name="level_msg" class="form-control" placeholder="Enter Binloc Name">
-  				</div>
-  				<div class="form-group">
-      				<input type="text" name="level_hide" class="form-control" placeholder="1 for Hide, 0 for Show">
-  				</div>
-  				<div class="form-group">
-  					<button type="submit" name="add_level" class="btn btn-primary">Add New Level</button>
-  				</div>
-			</form>
+	<div id="form-member" class="collapse">
+	<form class="well form" role="form" action="" method="POST">
+		<div class="form-group">
+			<label>Name</label>
+			<input name="name" type="text" class="form-control">
 		</div>
-		<a href="#" data-toggle="collapse" data-target="#form-batchnbinloc">
-		<div>
-			<span>Add Batch Bin location</span>
+		<div class="form-group">
+			<label>Warehouse</label>
+		<select class="form-control" name="whid">
+    			<option SELECTED>---------------------</option>
+<?php 
+  	while($wh_list_array = mysql_fetch_array($wh_list_SQL,MYSQL_ASSOC)){?>
+    <option value="<?=$wh_list_array["id"]?>"><?=ucwords($wh_list_array["name"])?> - <?=ucwords($wh_list_array["city"])?></option>
+<? } ?></select>
 		</div>
-	</a><br>
-		<div id="form-batchnbinloc" class="collapse">
-			<form class="well form-inline" role="form" method="post">
-  				<div class="form-group">
-      				<input type="text" name="level_msg" class="form-control" placeholder="Enter Batch Binloc here separate by comma">
-  				</div>
-  				<div class="form-group">
-      				<input type="text" name="level_hide" class="form-control" placeholder="1 for Hide, 0 for Show">
-  				</div>
-  				<div class="form-group">
-  					<button type="submit" name="add_level" class="btn btn-primary">Add New Level</button>
-  				</div>
-			</form>
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary" name="add_binloc">Create New Bin Location</button>
 		</div>
+	</form> 
+	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			&nbsp;
+			Registered Bin Location On The System
 		</div>
 		<div class="panel-body">
-		<?=$pagingResult->pagingMenu()?>
-		<br>
-		<table border="0" cellpadding="1" cellspacing="1" width="100%" class="table table-striped table-bordered table-condensed">	
-			<thead>
-            	<tr><th width="25" align="left">&nbsp;<b>NO</b>&nbsp;</td>
-					<th width="*" align="left">&nbsp;<b>LEVEL</b>&nbsp;</td>
-					<th width="35" align="left">&nbsp;<b>HIDDEN</b>&nbsp;</td>
-					<th width="*" colspan="2" align="center">&nbsp;<b>CMD</b>&nbsp;</td>
+        	<?=$pagingResult->pagingMenu();?>
+        	<br>
+        	<table border="0" cellpadding="1" cellspacing="1" width="100%" class="table table-striped table-bordered table-condensed">	
+				<thead>
+            	<tr valign="middle"> 
+                 	<th width="25">&nbsp;<b>NO.</b></td>
+					<th width="*" align="left">&nbsp;<b>BIN LOCATION</b></td>
+					<th width="*" align="left">&nbsp;<b>WAREHOUSE</b>&nbsp;</td>
+					<th width="*" align="left">&nbsp;<b>ADDRESS</b>&nbsp;</td>
+					<th width="*" align="left">&nbsp;<b>CITY</b>&nbsp;</td>
+                 	<th width="*" align="center" colspan="2">&nbsp;<b>CMD</b></td>
 				</tr>
-			</thead>
-			<tbody>
-<?php 	if($pagingResult->getPageRows()>= 1) {	
+				</thead>
+				<tbody>
+<?php 
+   if ($pagingResult->getPageRows()>= 1) {	
 			$count = $pagingResult->getPageOffset() + 1;
 			$result = $pagingResult->getPageArray();
-			while ($level_list_array = mysql_fetch_array($result, MYSQL_ASSOC)) {
-				if (isset($_GET['nid']) && $_GET['nid'] == $level_list_array["id"]) {?>
-				<form method="POST" action="">
-				<input type="hidden" name="nid" value="<?=$level_list_array["id"]?>">
-				<tr bgcolor="#ffcc99" align="left" valign="top">
-					<td width="25">&nbsp;<?=$count?>.</td>
-					<td><input type="text" class="form-control" name="level" size="30" value="<?=($level_list_array["name"])?ucwords($level_list_array["name"]):"-";?>"></td>
-					<td><input type="text" class="form-control" name="hidden" size="5" value="<?=$level_list_array["hidden"]?>"></td>
-					<td align="center">
-						<button type="submit" class="btn btn-default" name="upd_level">
-							<span class="glyphicon glyphicon-floppy-saved"></span>
-						</button>
-					</td>
-					<td align="center">
-						<button type="submit" class="btn btn-default" name="cancel">
-							<span class="glyphicon glyphicon-floppy-remove"></span>
-						</button>
-					</td>
-				</tr>
-				</form>
-<?php 		} else { ?>
-				<tr align="left" valign="top">
-					<td>&nbsp;<?=$count?>.</td>
-					<td>&nbsp;<?=($level_list_array["name"])?ucwords($level_list_array["name"]):"-";?> </td>
-					<td>&nbsp;<?=($level_list_array["hidden"] == '1')?"YES":"NO";?></td>
-					<td width="60" align="center">
-						<a title="Edit Level" class="btn btn-default" href="<?=$this_page?>&nid=<?=$level_list_array["id"]?>">
-							<span class="glyphicon glyphicon-pencil"></span>
-						</a>
-					</td>
-					<td width="60" align="center">
-						<a title="Delete Level" class="btn btn-default" href="<?=$this_page?>&did=<?=$level_list_array["id"]?>">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>
-					</td>
-				</tr>
-<?php	 		} $count++; 
-			}
-		} else {?>
-				<tr><td colspan="5" align="center" bgcolor="#e5e5e5"><br />No Data Entries<br /><br /></td></tr>
-				<?php } ?>
-			</tbody>
+			while ($array = mysql_fetch_array($result, MYSQL_ASSOC)) { ?>
+		<tr valign="top">
+			<td align="left">&nbsp;<?=$count?>.&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["name"])?ucwords($array["name"]):"-";?>&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["aisle"])?$array["aisle"]:"-";?>&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["address"])?$array["address"]:"-";?>&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["city"])?ucwords($array["city"]):"-";?>&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["pic"])?ucwords($array["pic"]):"-";?>&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["pemail"])?$array["pemail"]:"-";?>&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["pphone"])?$array["pphone"]:"-";?>&nbsp;</td>
+			<td width="60" align="center" valign="middle">
+				<a title="View Details" class="btn btn-default" href="./wh_det.php?id=<?=$array["id"]?>">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</a>
+			</td>
+			<td width="60" align="center" valign="middle">
+				<a title="Delete" class="btn btn-default" href="<?=$this_page?>&did=<?=$array["id"]?>">
+					<span class="glyphicon glyphicon-trash"></span>
+				</a>
+			</td>
+		</tr>
+
+<?php	$count++;  
+		}
+	} else {?>
+		<tr><td colspan="7" align="center" bgcolor="#e5e5e5"><br />No Data Entries<br /><br /></td></tr>
+				<?php } ?></tbody>
 			</table>
-				<?=$pagingResult->pagingMenu()?>
-		</div>
-		</div>
+				<?=$pagingResult->pagingMenu();?>
+				<br>
+				</div>
+	</div>
 </div>
 <//-----------------CONTENT-END-------------------------------------------------//>
-
 <?php include THEME_DEFAULT.'footer.php'; ?>

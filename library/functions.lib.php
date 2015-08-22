@@ -73,9 +73,10 @@ function log_hist($code,$status = "") {
 	$time 	= date('Y-m-d H:i:s');
 	$uid 	= ($_SESSION['uid'])?$_SESSION['uid']:0;
 	$query 	= "INSERT INTO log_history (uid,ip_addr,time,cid,notes) VALUES ('$uid','".$_SERVER["REMOTE_ADDR"]."','$time','$code','$status');";
-	if($_SESSION["level"] > 1 OR $uid == 0) {	
+	@mysql_query($query) or die(mysql_error());
+	/* if($_SESSION["level"] > 1 OR $uid == 0) {	
 		@mysql_query($query) or die(mysql_error());
-	}
+	} */
 }
 
 /* 

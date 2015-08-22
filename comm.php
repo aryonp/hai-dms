@@ -5,23 +5,17 @@ require_once LIB_PATH.'paging.lib.php';
 chkLicense();
 chkSession();	
 
-$page_title	= "Warehouse";
+$page_title	= "Commodity";
 $page_id 	= "4";
 chkSecurity($page_id);
 
-$list_q = "SELECT w.id, 
-		          w.name,
-				  w.aisle,
-				  w.address,
-				  w.city,
-				  w.zip,
-				  w.country,
-			 	  w.pic,
-				  w.pemail,
-				  w.pphone
-			FROM warehouse w
-			WHERE w.del = '0'
-			ORDER BY w.name ASC ";
+$list_q = "SELECT c.id, 
+		          c.name,
+				  c.satuan,
+				  c.expiry
+			FROM commodity c
+			WHERE c.del = '0'
+			ORDER BY c.name ASC ";
 $pagingResult = new Pagination();
 $pagingResult->setPageQuery($list_q);
 $pagingResult->paginate();
@@ -30,25 +24,19 @@ $this_page 	= $_SERVER['PHP_SELF']."?".$pagingResult->getPageQString();
 $status 	= "";
 $lastupd 	= date('Y-m-d H:i:s');
 
-if(isset($_POST['add_wh'])){
+if(isset($_POST['add_comm'])){
 	$name 	= strtolower(trim($_POST['name']));
-	$aisle	= strtolower(trim($_POST['aisle']));
-	$address = trim($_POST['address']);
-	$city 	= strtolower(trim($_POST['city']));
-	$zip	= trim($_POST['zip']);
-	$country = strtolower(trim($_POST['country']));
-	$pic 	= strtolower(trim($_POST['pic']));
-	$pemail = strtolower(trim($_POST['pemail']));
-	$pphone = strtolower(trim($_POST['pphone']));
+	$satuan	= strtolower(trim($_POST['satuan']));
+	$kadaluarsa = trim($_POST['kadaluarsa']);
 	$uid	= $_SESSION['uid'];
 	$date	= date('Y-m-d H:i:s');
 	
-   	if(!empty($name) AND !empty($aisle) AND !empty($address) AND !empty($city) AND !empty($pic) AND !empty($pemail) AND !empty($pphone)){
-		$add_q  = "INSERT INTO warehouse (name,aisle,address,city,zip,country,pic,pemail,pphone,createID,createDate,updID,updDate)
-				   VALUES ('$name','$aisle','$address','$city','$zip','$country','$pic','$pemail','$pphone','$uid','$date','$uid','$date');";
+   	if(!empty($name) AND !empty($satuan) AND !empty($kadaluarsa)){
+		$add_q  = "INSERT INTO commodity (name,satuan,expiry,createID,createDate,updID,updDate)
+				   VALUES ('$name','$satuan','$kadaluarsa','$uid','$date','$uid','$date');";
 				if(mysql_query($add_q) or die(mysql_error())) {	
 					$status .= "<div class=\"alert alert-success alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
-						    		Warehouse <b>".ucwords($name)."</b> has been succesfully created.
+						    		Commodity <b>".ucwords($name)."</b> has been succesfully created.
 							    </div>";
 					log_hist(6,$name);
 				}
@@ -61,7 +49,7 @@ if(isset($_POST['add_wh'])){
 	}	
 	else {	
 		$status .= "<div class=\"alert alert-warning alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
-					Cannot create an empty warehouse. Please check all available parameters.
+					Cannot create an empty commodity. Please check all available parameters.
 				    </div>";
 		log_hist(7,$name);
 	}
@@ -71,14 +59,14 @@ if (isset($_GET['did'])){
 	$did = trim($_GET['did']);
 	$uid = $_SESSION['uid'];
 	$date = date('Y-m-d H:i:s');
-	$del_q  = "UPDATE warehouse SET updID = '$uid', updDate = '$date', del = '1' WHERE id ='$did';";
+	$del_q  = "UPDATE commodity SET updID = '$uid', updDate = '$date', del = '1' WHERE id ='$did';";
 	if(@mysql_query($del_q)) {
 		log_hist(10,$did);
 		header("location:$this_page");
 		exit();
 	} else {
 		$status .= "<div class=\"alert alert-warning alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
-					Cannot delete warehouse. Please check all available parameters.
+					Cannot delete commodity. Please check all available parameters.
 				    </div>";
 		log_hist(11,$did);
 	}
@@ -91,7 +79,7 @@ include THEME_DEFAULT.'header.php'; ?>
 <div class="sub-header">
 	<a href="#" data-toggle="collapse" data-target="#form-member">
 		<div>
-			<span>Add New Warehouse</span>
+			<span>Add New Commodity</span>
 		</div>
 	</a><br>
 	<div id="form-member" class="collapse">
@@ -101,49 +89,21 @@ include THEME_DEFAULT.'header.php'; ?>
 			<input name="name" type="text" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>Aisle</label>
-			<input name="aisle" type="text" class="form-control">
+			<label>Satuan</label>
+			<input name="satuan" type="text" class="form-control" placeholder="Kg/Litre/Piece/etc">
 		</div>
 		<div class="form-group">
-			<label>Address</label>
-			<input name="address" type="text" class="form-control">
+			<label>Kadaluarsa</label>
+			<input name="kadaluarsa" type="text" class="form-control" placeholder="Please input in days">
 		</div>
 		<div class="form-group">
-			<label>City</label>
-			<input name="city" type="text" class="form-control">
-		</div>
-		<div class="form-group">
-			<label>Zip</label>
-			<input name="zip" type="text" class="form-control">
-		</div>
-		<div class="form-group">
-			<label>Country</label>
-			<input name="country" type="text" class="form-control">
-		</div>
-		<div class="form-group">
-			<label>PIC</label>
-			<input name="pic" type="text" class="form-control">
-		</div>
-		<div class="form-group">
-			<label>PIC Email</label>
-			<input name="pemail" type="text" class="form-control">
-		</div>
-		<div class="form-group">
-			<label>PIC Phone</label>
-			<input name="pphone" type="text" class="form-control">
-		</div>
-		<div class="form-group">
-			<label>Location</label>
-			<input name="location" type="text" class="form-control">
-		</div>
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary" name="add_wh">Create New Warehouse</button>
+			<button type="submit" class="btn btn-primary" name="add_comm">Create New Commodity</button>
 		</div>
 	</form> 
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			Registered Warehouse On The System
+			Registered Commodity On The System
 		</div>
 		<div class="panel-body">
         	<?=$pagingResult->pagingMenu();?>
@@ -151,15 +111,11 @@ include THEME_DEFAULT.'header.php'; ?>
         	<table border="0" cellpadding="1" cellspacing="1" width="100%" class="table table-striped table-bordered table-condensed">	
 				<thead>
             	<tr valign="middle"> 
-                 	<th width="25">&nbsp;<b>NO.</b></td>
-					<th width="*" align="left">&nbsp;<b>NAME</b></td>
-					<th width="*" align="left">&nbsp;<b>AISLE</b>&nbsp;</td>
-					<th width="*" align="left">&nbsp;<b>ADDRESS</b>&nbsp;</td>
-					<th width="*" align="left">&nbsp;<b>CITY</b>&nbsp;</td>
-                 	<th width="*" align="left">&nbsp;<b>PIC</b>&nbsp;</td>
-            		<th width="*" align="left">&nbsp;<b>PIC EMAIL</b>&nbsp;</td>
-                 	<th width="*" align="left">&nbsp;<b>PIC PHONE</b>&nbsp;</td>
-                 	<th width="*" align="center" colspan="2">&nbsp;<b>CMD</b></td>
+                 	<th width="25">&nbsp;<b>NO.</b></th>
+					<th width="*" align="left">&nbsp;<b>NAME</b></th>
+					<th width="*" align="left">&nbsp;<b>UNIT</b>&nbsp;</th>
+					<th width="*" align="left">&nbsp;<b>EXPIRY TIME</b>&nbsp;</th>
+                 	<th width="*" align="center" colspan="2">&nbsp;<b>CMD</b></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -171,12 +127,8 @@ include THEME_DEFAULT.'header.php'; ?>
 		<tr valign="top">
 			<td align="left">&nbsp;<?=$count?>.&nbsp;</td>
 			<td align="left">&nbsp;<?=($array["name"])?ucwords($array["name"]):"-";?>&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["aisle"])?$array["aisle"]:"-";?>&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["address"])?$array["address"]:"-";?>&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["city"])?ucwords($array["city"]):"-";?>&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["pic"])?ucwords($array["pic"]):"-";?>&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["pemail"])?$array["pemail"]:"-";?>&nbsp;</td>
-			<td align="left">&nbsp;<?=($array["pphone"])?$array["pphone"]:"-";?>&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["satuan"])?$array["satuan"]:"-";?>&nbsp;</td>
+			<td align="left">&nbsp;<?=($array["expiry"])?$array["expiry"]:"-";?>&nbsp;hari&nbsp;</td>
 			<td width="60" align="center" valign="middle">
 				<a title="View Details" class="btn btn-default" href="./wh_det.php?id=<?=$array["id"]?>">
 					<span class="glyphicon glyphicon-pencil"></span>
@@ -192,7 +144,7 @@ include THEME_DEFAULT.'header.php'; ?>
 <?php	$count++;  
 		}
 	} else {?>
-		<tr><td colspan="10" align="center" bgcolor="#e5e5e5"><br />No Data Entries<br /><br /></td></tr>
+		<tr><td colspan="6" align="center" bgcolor="#e5e5e5"><br />No Data Entries<br /><br /></td></tr>
 				<?php } ?></tbody>
 			</table>
 				<?=$pagingResult->pagingMenu();?>

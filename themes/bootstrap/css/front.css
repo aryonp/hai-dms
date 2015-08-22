@@ -1,0 +1,14 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+@font-face {
+  font-family: 'Museo Slab';
+  font-style:  normal;
+  src: url('../fonts/Museo_Slab_500.otf') format('opentype');
+}  
+.bg-ticket {
+	background-color: #d3d3d3;
+}

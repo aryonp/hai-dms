@@ -33,7 +33,7 @@ if(isset($_POST['add_comm'])){
 	$uid	= $_SESSION['uid'];
 	$date	= date('Y-m-d H:i:s');
 	
-   	if(!empty($name) AND !empty($satuan) AND !empty($kadaluarsa)){
+   	if(!empty($name) AND !empty($sku) AND !empty($unit) AND !empty($kadaluarsa)){
 		$add_q  = "INSERT INTO commodity (name,sku,unit,expiry,createID,createDate,updID,updDate)
 				   VALUES ('$name','$sku','$unit','$kadaluarsa','$uid','$date','$uid','$date');";
 				if(mysql_query($add_q) or die(mysql_error())) {	
@@ -44,7 +44,7 @@ if(isset($_POST['add_comm'])){
 				}
 				/* else {
 					$status .= "<div class=\"alert alert-warning alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
-						    	 Cannot create warehouse <b>".$name."</b>. Please check all available parameters.
+						    	 Cannot create commodity <b>".$name."</b>. Please check all available parameters.
 							    </div>";
 					log_hist(7,$name);
 				} */
@@ -100,7 +100,7 @@ include THEME_DEFAULT.'header.php'; ?>
 		</div>
 		<div class="form-group">
 			<label>Unit</label>
-			<input name="satuan" type="text" class="form-control" placeholder="Kg/Litre/Piece/etc">
+			<input name="unit" type="text" class="form-control" placeholder="Kg/Litre/Piece/etc">
 		</div>
 		<div class="form-group">
 			<label>Expiry Time</label>

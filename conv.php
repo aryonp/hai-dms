@@ -9,16 +9,16 @@ $page_title		= "Conversion Tool";
 $page_id		= "5";
 chkSecurity($page_id);
 
-$comm_list_q 	= "SELECT c.id, c.name, c.unit
+$comm_list_q 	= "SELECT c.id, c.name, c.unit, c.sku
 		           FROM commodity c
 		           WHERE c.del = 0;";
 $comm_list_SQL	= @mysql_query($comm_list_q) or die(mysql_error());
 
 
-$query ="SELECT co.id, c.id AS cid, c.name AS cname, c.unit, co.conv 
+$query ="SELECT co.id, c.id AS cid, c.sku, c.name AS cname, c.unit, co.conv 
 		 FROM conv AS co 
 		 LEFT JOIN commodity AS c ON (c.id = co.cid)
-		 WHERE co.del = '0' AND co.conv !='' ORDER BY c.name ASC ";
+		 WHERE co.del = '0' AND co.conv != '' ORDER BY c.name ASC ";
 $pagingResult = new Pagination();
 $pagingResult->setPageQuery($query);
 $pagingResult->paginate();
@@ -123,6 +123,7 @@ include THEME_DEFAULT.'header.php'; ?>
 		<table border="0" cellpadding="1" cellspacing="1" width="100%" class="table table-striped table-bordered table-condensed">	
 			<thead>
             	<tr><th width="25" align="left">&nbsp;<b>NO</b>&nbsp;</td>
+            		<th width="*" align="left">&nbsp;<b>SKU</b>&nbsp;</td>
 					<th width="*" align="left">&nbsp;<b>COMMODITY</b>&nbsp;</td>
 					<th width="35" align="left">&nbsp;<b>CAPACITY</b>&nbsp;</td>
 					<th width="*" colspan="2" align="center">&nbsp;<b>CMD</b>&nbsp;</td>
@@ -155,7 +156,9 @@ include THEME_DEFAULT.'header.php'; ?>
 <?php 		} else { ?>
 				<tr align="left" valign="top">
 					<td>&nbsp;<?=$count?>.</td>
+					<td>&nbsp;<?=($array["sku"])?$array["sku"]:"-";?> </td>
 					<td>&nbsp;<?=($array["cname"])?ucwords($array["cname"]):"-";?> </td>
+					<td>&nbsp;<?=($array["sku"])?$array["sku"]:"-";?> </td>
 					<td>&nbsp;<?=($array["conv"])?$array["conv"]." ".$array["unit"]:"-";?> per pallet</td>
 					<td width="60" align="center">
 						<a title="Edit" class="btn btn-default" href="<?=$this_page?>&nid=<?=$array["id"]?>">

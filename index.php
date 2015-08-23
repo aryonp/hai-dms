@@ -30,7 +30,7 @@ require_once 'init.php';
                    </a>
               </div>
               <div class="col-md-6">
-              	<a href="./sa.php">
+              	<a href="./maps.html">
               		<div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="row">

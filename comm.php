@@ -11,6 +11,7 @@ chkSecurity($page_id);
 
 $list_q = "SELECT c.id, 
 		          c.name,
+				  c.sku,
 				  c.unit,
 				  c.expiry
 			FROM commodity c
@@ -26,14 +27,15 @@ $lastupd 	= date('Y-m-d H:i:s');
 
 if(isset($_POST['add_comm'])){
 	$name 	= strtolower(trim($_POST['name']));
+	$sku	= strtolower(trim($_POST['sku']));
 	$unit	= strtolower(trim($_POST['unit']));
 	$kadaluarsa = trim($_POST['kadaluarsa']);
 	$uid	= $_SESSION['uid'];
 	$date	= date('Y-m-d H:i:s');
 	
    	if(!empty($name) AND !empty($satuan) AND !empty($kadaluarsa)){
-		$add_q  = "INSERT INTO commodity (name,unit,expiry,createID,createDate,updID,updDate)
-				   VALUES ('$name','$unit','$kadaluarsa','$uid','$date','$uid','$date');";
+		$add_q  = "INSERT INTO commodity (name,sku,unit,expiry,createID,createDate,updID,updDate)
+				   VALUES ('$name','$sku','$unit','$kadaluarsa','$uid','$date','$uid','$date');";
 				if(mysql_query($add_q) or die(mysql_error())) {	
 					$status .= "<div class=\"alert alert-success alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
 						    		Commodity <b>".ucwords($name)."</b> has been succesfully created.
@@ -89,6 +91,10 @@ include THEME_DEFAULT.'header.php'; ?>
 	<div id="form-member" class="collapse">
 	<form class="well form" role="form" action="" method="POST">
 		<div class="form-group">
+			<label>SKU</label>
+			<input name="sku" type="text" class="form-control">
+		</div>
+		<div class="form-group">
 			<label>Name</label>
 			<input name="name" type="text" class="form-control">
 		</div>
@@ -116,6 +122,7 @@ include THEME_DEFAULT.'header.php'; ?>
 				<thead>
             	<tr valign="middle"> 
                  	<th width="25">&nbsp;<b>NO.</b></th>
+					<th width="*" align="left">&nbsp;<b>SKU</b>&nbsp;</th>
 					<th width="*" align="left">&nbsp;<b>NAME</b></th>
 					<th width="*" align="left">&nbsp;<b>UNIT</b>&nbsp;</th>
 					<th width="*" align="left">&nbsp;<b>EXPIRY TIME</b>&nbsp;</th>
@@ -150,6 +157,7 @@ include THEME_DEFAULT.'header.php'; ?>
 <?php 		} else { ?>
 				<tr align="left" valign="top">
 					<td>&nbsp;<?=$count?>.</td>
+					<td>&nbsp;<?=($array["sku"])?ucwords($array["sku"]):"-";?></td>
 					<td>&nbsp;<?=($array["name"])?ucwords($array["name"]):"-";?></td>
 					<td>&nbsp;<?=($array["unit"])?$array["unit"]:"-";?></td>
 					<td>&nbsp;<?=($array["expiry"])?$array["expiry"]:"-";?> hari</td>
@@ -167,7 +175,7 @@ include THEME_DEFAULT.'header.php'; ?>
 <?php	 		} $count++; 
 			}
 		} else {?>
-				<tr><td colspan="5" align="center" bgcolor="#e5e5e5"><br />No Data Entries<br /><br /></td></tr>
+				<tr><td colspan="6" align="center" bgcolor="#e5e5e5"><br />No Data Entries<br /><br /></td></tr>
 				<?php } ?>
 				
 				</tbody>

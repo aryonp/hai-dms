@@ -1,0 +1,225 @@
+/*
+ * Author: Adi Arriansyah
+ * URL: http://www.satoeboemi.com
+ *
+ * Project Name: Satoeboemi
+ * Version: 0.1
+ * URL: http://www.satoeboemi.com
+ */
+
+
+
+@font-face {
+	font-family:'BentonBold';
+	src:url(../fonts/BentonSans-Bold.otf);
+}
+
+@font-face {
+	font-family:'BentonLight';
+	src:url(../fonts/BentonSans-Light.otf);
+}
+
+@font-face {
+	font-family:'BentonRegular';
+	src:url(../fonts/BentonSans-Regular.otf);
+}
+
+@font-face {
+	font-family:'Blender';
+	src:url(../fonts/BlenderPro-Bold.otf);
+}
+
+
+.navbar-inverse {
+    background-color: white;
+    border-bottom: 1px solid #dce0e0;
+}
+
+.navbar-right {
+    float: right!important;
+    margin-right: -15px;
+    position: relative;
+    right: 200px;
+    top: -3px;
+}
+
+
+
+.navbar-form .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+    border: none;
+        box-shadow: none;
+}
+
+
+.navbar-brand>img {
+    display: block;
+    margin-top: -20px;
+}
+
+.navbar-inverse {
+    background-color: white;
+    border-bottom: 1px solid #dce0e0;
+    height: 70px;
+}
+
+.navbar-nav>li>a {
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+
+.navbar-right~.navbar-right {
+    position: relative;
+    right: 200px;
+    top: 5px;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #333333;
+    font-family: 'BentonBold',Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+    color: #444444;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.infoutama {
+    position: absolute;
+    z-index: 99999;
+    margin-top: -650px;
+    margin-left: 40px;
+    text-align: left;
+}
+
+.ketersediaantext
+{
+font-family: 'Blender';
+color: white;
+font-size: 20px;
+letter-spacing: 3px;
+border-bottom: 1px solid white;
+padding-bottom: 10px;
+
+}
+
+.infocircle
+{
+background: #c5161d;
+	border-radius: 50%;
+width: 200px;
+height: 200px;
+margin-top: 10px;
+margin-left: 30px;
+}
+
+.barang
+{
+	font-family:'Blender';
+	font-size: 40px;
+	color: white;
+	vertical-align: center;
+	position: relative;
+	top:50px;
+}
+
+.jumlahbarang
+{
+	font-family:'Blender';
+	font-size: 40px;
+	color: white;
+	vertical-align: center;
+	position: relative;
+	top:30px;
+}
+
+.batas
+{
+height: 1px;
+width: 250px;
+background:white;
+margin-top: 10px;
+}
+
+.batasbox {
+    height: 3px;
+    width: 50px;
+    background: white;
+    margin-top: 0px;
+    margin-left: -200px;
+}
+.namakota
+{
+	font-family:'Blender';
+	font-size: 40px;
+	color: white;
+	letter-spacing: 2px;
+}
+
+.jumlahkk
+{
+color: white;
+    font-family: 'BentonRegular',Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.konsumsiperbln
+{
+color: white;
+    font-family: 'BentonRegular',Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.jumlahgudang
+{
+color: white;
+    font-family: 'BentonRegular',Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.statustexts
+{
+color: white;
+    font-family: 'BentonRegular',Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.statuskota
+{
+color: white;
+    font-family: 'BentonRegular',Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+
+.hargatext
+{
+color: white;
+    font-family: 'BentonRegular',Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+
+.hargabarang
+{
+	font-family:'Blender';
+	font-size: 40px;
+	color: #c5161d;
+}
+
+.lokasi
+{
+	font-family:'Blender';
+	position: absolute;
+	color: white;
+	margin-top: 20px;
+	z-index: 9999;
+	margin-left: 550px;
+	text-transform: uppercase;
+}
+
+.theline
+{
+position: absolute;
+margin-top: 170px;
+margin-left: 170px;
+	z-index: 9999;
+}

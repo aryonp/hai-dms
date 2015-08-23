@@ -9,15 +9,16 @@
 	<script src="<?=JS_PATH?>moment.js"></script>
 	<link rel="stylesheet" href="<?=CSS_PATH?>bootstrap.min.css">
 	<link rel="stylesheet" href="<?=CSS_PATH?>custom.css"/>
+	<link rel="stylesheet" href="<?=CSS_PATH?>style.css"/>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#"><?=PRODUCT?> for <?=COMP_NAME?></a>
+          <a class="navbar-brand" href="#"><img src="<?=IMG_PATH?>logo.png"/></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right aryo">
           	<li class="dropdown">
   				<a data-target="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     				Go To
@@ -26,7 +27,7 @@
 
   				<ul class="dropdown-menu" role="menu">
             		<li>
-            			<a href="./sa.php" >
+            			<a href="./maps.php" >
             			<span class="glyphicon glyphicon-globe"></span>
             				Stock Availability
             			</a>
@@ -106,4 +107,4 @@
         <div class="col-sm-3 col-md-2 sidebar">
          <?=nav_menu()?>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main-">

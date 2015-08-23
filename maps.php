@@ -1,3 +1,6 @@
+<?php
+require_once 'init.php';
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -7,15 +10,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="<?=CSS_PATH?>style.css"/>
 
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?=CSS_PATH?>bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/dashboard.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="<?=CSS_PATH?>dashboard.css" rel="stylesheet">
+    <link href="<?=CSS_PATH?>style.css" rel="stylesheet">
       <script type="text/javascript"
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzIps0MIlxQF81hydOuid3z_or6pI_KOA">
 		</script>
@@ -38,7 +42,7 @@
 				var marker = new google.maps.Marker({
 					position: myLatlng,
 					map: map,
-					icon: 'images/biasing.png'
+					icon: '<?=IMG_PATH?>biasing.png'
 				});
 				
 				
@@ -61,7 +65,6 @@
   </head>
 
   <body>
-aaa
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -72,7 +75,7 @@ aaa
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">
-	          <img src="images/logo.png"/>
+	          <img src="<?=IMG_PATH?>logo.png"/>
 	          
 	          
           </a>
@@ -82,7 +85,7 @@ aaa
   
    
           <form class="navbar-form navbar-right">
-                <img src="images/search.png"/>
+                <img src="<?=IMG_PATH?>search.png"/>
             <input type="text" class="form-control" placeholder="Input Kota">
           </form>
           
@@ -103,7 +106,7 @@ aaa
     Cirebon, Jawa Barat
     </div>
     <div class="theline">
-    <img src="images/line.png"/>
+    <img src="<?=IMG_PATH?>line.png"/>
     </div>
     <center id="map" style="background-color: white; margin:0px;padding:0px;">
     		<div id="map-canvas" style="height:700px"></div>
@@ -180,10 +183,10 @@ aaa
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="<?=JS_PATH?>bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="js/vendor/holder.min.js"></script>
+    <script src="<?=JS_PATH?>vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script src="<?=JS_PATH?>ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

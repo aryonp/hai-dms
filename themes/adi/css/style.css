@@ -30,6 +30,11 @@
 }
 
 
+@font-face {
+	font-family:'Bebas';
+	src:url(../fonts/BebasNeueRegular.otf);
+}
+
 .navbar-inverse {
     background-color: white;
     border-bottom: 1px solid #dce0e0;
@@ -223,3 +228,121 @@ margin-top: 170px;
 margin-left: 170px;
 	z-index: 9999;
 }
+
+.panel-footer {
+    padding: 10px 15px;
+    background-color: white !important;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.kolaborasi {
+    margin-top: 0px;
+}
+
+.logodepan
+{
+	width: 400px;
+	margin-top:-50px;
+	
+}
+.panel-success {
+    border-color: #ebebeb;
+}
+
+.panel-pusat {
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.panel-pangan {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.panel-primary {
+    border-color: #ebebeb;
+}
+
+.panel-warning {
+    border-color: #ebebeb;
+}
+
+.panel-info {
+    border-color: #ebebeb;
+}
+
+.panel-warning {
+    border-color: #ebebebe;
+}
+
+.pull-left
+{
+   font-family: 'Bebas',Helvetica Neue,Helvetica,Arial,sans-serif;
+   font-size: 40px;
+   letter-spacing: 2px;
+   color: #373737;
+   
+}
+.gemahripah
+{
+font-family: 'Bebas',Helvetica Neue,Helvetica,Arial,sans-serif;
+   font-size: 20px;
+   letter-spacing: 2px;
+   color: #373737;
+   margin-top:-10px;
+   padding-bottom:30px;
+}
+
+.main-
+{
+margin-top:0px;
+	
+}
+
+.sidebar
+{
+	    top: 70px;
+	
+}a {
+    color: black;
+    text-decoration: none;
+}
+
+.aryo
+{
+right:0px !important;
+}
+
+.pangantext
+{
+	margin-left: 70px;
+	
+}
+.panganimg
+{
+	    position: relative;
+    right: 40px;
+}
+
+.aryofontkecil
+{
+	font-size:20px;
+}
+
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    font-family: 'Bebas',Helvetica Neue,Helvetica,Arial,sans-serif;
+    color: #373737;
+        font-size: 18px;
+}
+

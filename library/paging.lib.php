@@ -125,7 +125,7 @@ class Pagination {
 	
 	function pagingMenu(){
 		$dispMenu = "<div class=\"row\">".
-				    "<div class=\"col-md-2 pull-left\">".$this->pagingJMenu()."</div>".
+				    "<div class=\"col-md-2 pull-left aryofontkecil\">".$this->pagingJMenu()."</div>".
 					"<div class=\"btn-group col-md-8 text-center\">".
 					"	<ul class=\"pagination\">".
 						     "<li>".$this->firstPage."</li>".

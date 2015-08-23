@@ -158,7 +158,6 @@ include THEME_DEFAULT.'header.php'; ?>
 					<td>&nbsp;<?=$count?>.</td>
 					<td>&nbsp;<?=($array["sku"])?$array["sku"]:"-";?> </td>
 					<td>&nbsp;<?=($array["cname"])?ucwords($array["cname"]):"-";?> </td>
-					<td>&nbsp;<?=($array["sku"])?$array["sku"]:"-";?> </td>
 					<td>&nbsp;<?=($array["conv"])?$array["conv"]." ".$array["unit"]:"-";?> per pallet</td>
 					<td width="60" align="center">
 						<a title="Edit" class="btn btn-default" href="<?=$this_page?>&nid=<?=$array["id"]?>">

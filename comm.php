@@ -11,7 +11,7 @@ chkSecurity($page_id);
 
 $list_q = "SELECT c.id, 
 		          c.name,
-				  c.satuan,
+				  c.unit,
 				  c.expiry
 			FROM commodity c
 			WHERE c.del = '0'
@@ -26,14 +26,14 @@ $lastupd 	= date('Y-m-d H:i:s');
 
 if(isset($_POST['add_comm'])){
 	$name 	= strtolower(trim($_POST['name']));
-	$satuan	= strtolower(trim($_POST['satuan']));
+	$unit	= strtolower(trim($_POST['unit']));
 	$kadaluarsa = trim($_POST['kadaluarsa']);
 	$uid	= $_SESSION['uid'];
 	$date	= date('Y-m-d H:i:s');
 	
    	if(!empty($name) AND !empty($satuan) AND !empty($kadaluarsa)){
-		$add_q  = "INSERT INTO commodity (name,satuan,expiry,createID,createDate,updID,updDate)
-				   VALUES ('$name','$satuan','$kadaluarsa','$uid','$date','$uid','$date');";
+		$add_q  = "INSERT INTO commodity (name,unit,expiry,createID,createDate,updID,updDate)
+				   VALUES ('$name','$unit','$kadaluarsa','$uid','$date','$uid','$date');";
 				if(mysql_query($add_q) or die(mysql_error())) {	
 					$status .= "<div class=\"alert alert-success alert-dismissable\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>
 						    		Commodity <b>".ucwords($name)."</b> has been succesfully created.
@@ -133,7 +133,7 @@ include THEME_DEFAULT.'header.php'; ?>
 				<tr bgcolor="#ffcc99" align="left" valign="top">
 					<td width="25">&nbsp;<?=$count?>.</td>
 					<td><input type="text" class="form-control" name="name" size="30" value="<?=($array["name"])?ucwords($array["name"]):"-";?>"></td>
-					<td><input type="text" class="form-control" name="satuan" size="30" value="<?=($array["satuan"])?$array["satuan"]:"-";?>"></td>
+					<td><input type="text" class="form-control" name="satuan" size="30" value="<?=($array["unit"])?$array["unit"]:"-";?>"></td>
 					<td><input type="text" class="form-control" name="expiry" size="30" value="<?=($array["expiry"])?$array["expiry"]:"-";?>"></td>
 					<td align="center">
 						<button type="submit" class="btn btn-default" name="upd_level">
@@ -151,8 +151,8 @@ include THEME_DEFAULT.'header.php'; ?>
 				<tr align="left" valign="top">
 					<td>&nbsp;<?=$count?>.</td>
 					<td>&nbsp;<?=($array["name"])?ucwords($array["name"]):"-";?></td>
-					<td>&nbsp;<?=($array["name"])?$array["satuan"]:"-";?></td>
-					<td>&nbsp;<?=($array["name"])?$array["expiry"]:"-";?></td>
+					<td>&nbsp;<?=($array["unit"])?$array["unit"]:"-";?></td>
+					<td>&nbsp;<?=($array["expiry"])?$array["expiry"]:"-";?> hari</td>
 					<td width="60" align="center">
 						<a title="Edit Level" class="btn btn-default" href="<?=$this_page?>&nid=<?=$array["id"]?>">
 							<span class="glyphicon glyphicon-pencil"></span>

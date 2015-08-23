@@ -14,7 +14,7 @@ chkLicense();
 chkSession();
 
 $page_title = "Help";
-$page_id	= "8";
+$page_id	= "15";
 chkSecurity($page_id);
 
 $query ="SELECT h.id, 
